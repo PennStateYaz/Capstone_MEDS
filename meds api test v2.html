@@ -1,0 +1,42 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Map with Click Coordinates</title>
+    <script type="text/javascript"
+        src="https://www.bing.com/api/maps/mapcontrol?key=YOUR_API_KEY"></script>
+    <style>
+        #myMap {
+            position: relative;
+            width: 2000px;
+            height: 800px;
+        }
+    </style>
+</head>
+
+<body onload="loadMapScenario()">
+    <div id="myMap"></div>
+    <p>Click on the map to get coordinates:</p>
+    <p id="coordinates"></p>
+
+    <script>
+        function loadMapScenario() {
+            var map = new Microsoft.Maps.Map(document.getElementById('myMap'), {
+                credentials: 'AvPW69oh3Ekr5_EDpTKuF3e_wAZ2hKCnJf5AqEcr2eGdn8IqpTkImX0hSKrgX7GU',
+                center: new Microsoft.Maps.Location(0, 0), // Center the map at an initial location
+                zoom: 10 // Initial zoom level
+            });
+
+            var coordinatesDisplay = document.getElementById('coordinates');
+
+            // Add a click event listener to the map
+            Microsoft.Maps.Events.addHandler(map, 'click', function (e) {
+                var point = new Microsoft.Maps.Point(e.getX(), e.getY());
+                var loc = map.tryPixelToLocation(point);
+                var latitude = loc.latitude;
+                var longitude = loc.longitude;
+                coordinatesDisplay.innerHTML = `Latitude: ${latitude}, Longitude: ${longitude}`;
+            });
+        }
+    </script>
+</body>
